@@ -45,7 +45,7 @@ def get_bkt_location():
         )
 
     # print(response)
-    return response['LocationConstraint']
+    return response['LocationConstraint'] # use case:1 not all case returns the location
     # bucket_location.append(resource_s3.get_bucket_location(Bucket=bucket['Name']))
     # bucket_location.append(bucket_location['LocationConstraint'])
 

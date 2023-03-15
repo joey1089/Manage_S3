@@ -2,23 +2,8 @@ import boto3
 import botocore
 from botocore.exceptions import ClientError
 from listbuckets import get_bucketlist
+import logging
 
-
-# resource_s3_list = boto3.client("s3")
-# get_response = resource_s3_list.list_buckets()
-# buckets = get_response["Buckets"]
-# print("Before Deleting buckets count : ",len(buckets))
-# for bucket in buckets:
-#     print("S3 bucket name : ",bucket["Name"])
-
-# client = boto3.client('s3')
-# response = client.delete_bucket(
-#     Bucket='checkifitsworks',
-# )
-
-# print(response)
-# # buckets = get_response["Buckets"] # needs new logic to recount 
-# # print('\n After Deletion count :',len(buckets))
 
 def delete_all_objects_from_s3_folder():
     """ This method deletes all file objects in a folder from S3 buckets. """
@@ -27,40 +12,42 @@ def delete_all_objects_from_s3_folder():
     # bucket_name = "s3bucket4me2test01"
     bucket_names = get_bucketlist()
     print("S3 Buckets : ", bucket_names)
-    get_response = s3_client.list_buckets()
-    buckets = get_response["Buckets"]
-    print("Before Deleting buckets count : ",len(buckets))
-    print("Before deleting the bucket we need to check if its empty. Checking ...")
-    for bucket_name in bucket_names:
-        fileObj = s3_client.list_objects_v2(Bucket=bucket_name)
-        fileCount = fileObj['KeyCount']
-        if fileCount == 0:
-            response = s3_client.delete_bucket(Bucket=bucket_name)
-            print("{} has been deleted successfully !!!".format(bucket_name))
+    try:
+        get_response = s3_client.list_buckets()
+        buckets = get_response["Buckets"]
+        print("Before Deleting buckets count : ",len(buckets))
+        if len(buckets) != 0:
+            print("Before deleting the bucket we need to check if its empty. Checking ...")
+            for bucket_name in bucket_names:
+                fileObj = s3_client.list_objects_v2(Bucket=bucket_name)
+                fileCount = fileObj['KeyCount']
+                if fileCount == 0:
+                    response = s3_client.delete_bucket(Bucket=bucket_name)
+                    print("{} has been deleted successfully !!!".format(bucket_name))
 
+                else:
+                    response = s3_client.list_objects_v2(Bucket=bucket_name) 
+                    files_in_folder = response["Contents"]
+                    files_to_delete = []
+                    # Deletes multiple files, here we will create Key array to pass to delete_objects function
+                    for f in files_in_folder:
+                        files_to_delete.append({"Key": f["Key"]})
+
+                    # This will delete all files in a folder
+                    response_list = []
+                    response = s3_client.delete_objects(
+                        Bucket=bucket_name, Delete={"Objects": files_to_delete}
+                    )
+                    response_list.append(response)
+        
+                print("S3 Buckets left out: ", bucket_names)
+                return buckets
         else:
-            response = s3_client.list_objects_v2(Bucket=bucket_name) 
-            files_in_folder = response["Contents"]
-            files_to_delete = []
-            # Deletes multiple files, here we will create Key array to pass to delete_objects function
-            for f in files_in_folder:
-                files_to_delete.append({"Key": f["Key"]})
-
-            # This will delete all files in a folder
-            response_list = []
-            response = s3_client.delete_objects(
-                Bucket=bucket_name, Delete={"Objects": files_to_delete}
-            )
-            response_list.append(response)
-    # print(f"This Bucket {bucket_name} has this much files : {fileCount}")  
-
-    # First we list all files in folder
-    # response = s3_client.list_objects_v2(Bucket=bucket_name, Prefix="images/")    
-    # print("After Deleting buckets count : ",len(buckets))
-    print("S3 Buckets left out: ", bucket_names)
-
-
-    return buckets
+            print("No Buckets found!")
+            return False
+    except ClientError as e:
+        logging.error(e)
+        return False
 
 print(delete_all_objects_from_s3_folder())
 
