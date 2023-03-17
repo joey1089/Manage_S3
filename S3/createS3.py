@@ -27,25 +27,25 @@ def create_S3_bucket(bucket_list, region=None):
             for bucket_name in bucket_list:
                 s3_client.create_bucket(Bucket=bucket_name)
         else:
-            if region == 'us-east-1':
-                s3_client = boto3.client('s3', region_name=region)
-                # location = {'LocationConstraint': region}
-                for bucket_name in bucket_list:
-                    # created_bktlist.append[str(bucket_name)] #bucket names are objects so can't subscript - to add them with append(listnames)
-                    s3_client.create_bucket(Bucket=bucket_name,)
-                                        # CreateBucketConfiguration=location)
-                    [created_bktlist[bucket_name] for bucket_name in range(len(bucket_list))]    
-                    print(created_bktlist)
+            # if region == 'us-east-1':
+            #     s3_client = boto3.client('s3', region_name=region)
+            #     # location = {'LocationConstraint': region}
+            #     for bucket_name in bucket_list:
+            #         # created_bktlist.append[str(bucket_name)] #bucket names are objects so can't subscript - to add them with append(listnames)
+            #         s3_client.create_bucket(Bucket=bucket_name,)
+            #                             # CreateBucketConfiguration=location)
+            #         [created_bktlist[bucket_name] for bucket_name in range(len(bucket_list))]    
+            #         print(created_bktlist)
                 
-            else:
-                s3_client = boto3.client('s3', region_name=region)
-                location = {'LocationConstraint': region}
-                for bucket_name in bucket_list:
-                    s3_client.create_bucket(Bucket=bucket_name,
-                                        CreateBucketConfiguration=location)
-                    # created_bktlist.append[bucket_name]   
-                    [created_bktlist[bucket_name] for bucket_name in range(len(bucket_list))]             
-                print("Created buckets list : ",bucket_name)
+            # else:
+            s3_client = boto3.client('s3', region_name=region)
+            location = {'LocationConstraint': region}
+            for bucket_name in bucket_list:
+                s3_client.create_bucket(Bucket=bucket_name,
+                                    CreateBucketConfiguration=location)
+                # created_bktlist.append[bucket_name]   
+                [created_bktlist[bucket_name] for bucket_name in range(len(bucket_list))]             
+            print("Created buckets list : ",bucket_name)
     except ClientError as e:
         logging.error(e)
         return False
@@ -76,6 +76,8 @@ if credentials_check() != False:
     # print(data.loc[0:4,'bucketnames']) # prints the all the lists
     S3bucket_list = data['bucketnames'].to_list() # get the named column and converts it to a list.
     # print(data.loc[0:2]) # get the 3 rows from the start
-    create_S3_bucket(S3bucket_list, region_input)
+    created_S3 = create_S3_bucket(S3bucket_list, region_input)
+    if created_S3 == True:
+        print("Created S3 buckets : ", get_bucketlist())
 else:
     print("\nInvalid AWS Access keys!\n")
