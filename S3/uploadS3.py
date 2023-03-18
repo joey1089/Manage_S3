@@ -1,7 +1,6 @@
 import boto3
 from botocore.exceptions import ClientError
 from listbuckets import get_bucketlist, clrscrn
-import os
 
 
 def upload2S3(res_s3, buckets_list):

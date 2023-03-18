@@ -1,14 +1,9 @@
-import logging
-import boto3
-from botocore.exceptions import ClientError
-from listbuckets import get_bucketlist, clrscrn, get_bkt_location
+from listbuckets import get_bucketlist, clrscrn
 from verify_awscredentials import credentials_check
 from createS3 import create_S3_bucket
 from deleteS3 import delete_all_objects_from_s3_folder
 from uploadS3 import upload2S3
 from Dwnld_S3File import download_files
-import pandas as pd
-import os
 import time
 
 def userchoice():
@@ -36,9 +31,12 @@ def userchoice():
         print("Exiting ...")
         time.sleep(5)
         exit()
+    return exit()
 
-
-userchoice()
+if credentials_check():
+    userchoice()
+else:
+    print("Invalid Credentials!")
 
 
 
