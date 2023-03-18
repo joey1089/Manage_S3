@@ -56,16 +56,16 @@ def download_files(s3_client, bucket_name, local_path, file_names, folders):
 
 
 
-S3_dwnld = boto3.client("s3")
-bucket_list = get_bucketlist()
-if bucket_list != False:
-    file_names, folders = get_file_folders(S3_dwnld, bucket_list)
-    download_files(
-        S3_dwnld,
-        bucket_list,
-        "/myS3_backup",
-        file_names,
-        folders
-    )
-else:
-    print("\nNo Buckets found!\n")
+# S3_dwnld = boto3.client("s3")
+# bucket_list = get_bucketlist()
+# if bucket_list != False:
+#     file_names, folders = get_file_folders(S3_dwnld, bucket_list)
+#     download_files(
+#         S3_dwnld,
+#         bucket_list,
+#         "/myS3_backup",
+#         file_names,
+#         folders
+#     )
+# else:
+#     print("\nNo Buckets found!\n")
