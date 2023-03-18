@@ -5,6 +5,7 @@ from deleteS3 import delete_all_objects_from_s3_folder
 from uploadS3 import upload2S3
 from Dwnld_S3File import download_files
 import time
+import sys
 
 def userchoice():
     '''Users are given a choice to choose an operation to do on S3 Buckets.'''
@@ -33,10 +34,13 @@ def userchoice():
         exit()
     return exit()
 
-if credentials_check():
-    userchoice()
-else:
-    print("Invalid Credentials!")
+# if __name__ == '__main__':
+#     # Execute when the module is not initialized from an import statement.
+#     if credentials_check():
+#         userchoice()
+#     else:
+#         print("Invalid Credentials!")
+#         sys.exit(userchoice())  
 
 
 
