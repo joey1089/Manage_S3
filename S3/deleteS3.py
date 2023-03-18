@@ -66,7 +66,7 @@ check_delete = delete_all_objects_from_s3_folder()
 if check_delete == True:
     print("Deletion was successfully completed!")
 else:
-    print("No Deletion happened!")
+    print("\nNothing Deleted!\n")
 
 # ----- new method - checks if there is any object files before trying to delete the buckets---- 
 # import boto3
