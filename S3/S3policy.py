@@ -11,7 +11,7 @@ def check_bucket_status():
         # send the bucket list to Bucket
         for bucket_name in bucket_list:
             try:
-                response = s3_client.get_bucket_policy_status(Bucket="testbucket-frompython-2")
+                response = s3_client.get_bucket_policy_status(Bucket=bucket_name)
                 return response["PolicyStatus"]
             except ClientError as e:
                 # if you do not have any policy attached to bucket it will throw error
@@ -34,7 +34,7 @@ def set_bucket_policy():
           "Sid": "Stmt1577423305093",
           "Action": "s3:*",
           "Effect": "Allow",
-          "Resource": "arn:aws:s3:::testbucket-frompython-2/*",
+          "Resource": "arn:aws:s3:::ReplacewithBucket-Name/*",
           "Principal": {
             "AWS": [
               "*"
