@@ -34,7 +34,7 @@ def create_S3_bucket(bucket_list, region=None):
                     # created_bktlist.append[str(bucket_name)] #bucket names are objects so can't subscript - to add them with append(listnames)
                     s3_client.create_bucket(Bucket=bucket_name,)
                                         # CreateBucketConfiguration=location)
-                    [created_bktlist[bucket_name] for bucket_name in range(len(bucket_list))]    
+                    [created_bktlist[bucket_name] for bucket_name in range(len(bucket_list)-1)]    
                     print(created_bktlist)
                 
             else:
