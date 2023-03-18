@@ -7,15 +7,17 @@ import os
 def upload2S3(res_s3, buckets_list):
     ''' Uploads given file to s3 buckets in the list. '''
     # print(s3)
-    file2upload = 'text01.txt' #should be same as the data
+    user_file = str(input("\nGive full path details for the file you want to upload : "))
+    file2upload = user_file #should be same as the data
     clrscrn()
     for bucket_name in buckets_list:
-        print("Select a bucket from the list : ",bucket_name) # only first bucket in the list gets the to upload files
+        print("Current Bucket Name :- ",bucket_name) # only first bucket in the list gets the to upload files
         # Need to change logic to check the list of buckets then user decided which buckets to upload files.
         # Write try catch block to catch if file not found error.
         # write code to select a bucket that user wants.
-        user_input = str(input(f"Confirm this {bucket_name} to upload file - Press 'y/Y' or anyother key to skip : "))
-        if user_input in ['y','Y']:
+        user_input = str(input(f"Confirm is this {bucket_name} bucket to upload file - Press '1' or anyother key to skip : "))
+        while user_input == '1':
+        # if user_input in ['y','Y']:
             with open('test01.txt', 'rb') as data:
 
                 res_s3.upload_fileobj(
@@ -24,8 +26,9 @@ def upload2S3(res_s3, buckets_list):
                     Key=file2upload
                 )
             return f"This Bucket {bucket_name} got uploaded with file {data.name}"
-        else:
-            return "No files uploaded!"
+        continue
+        # else:
+        #     return f"No files uploaded for {bucket_name}!"
         
 
 

@@ -1,6 +1,5 @@
 import boto3
 from botocore.exceptions import ClientError
-import os
 import logging
 
 def credentials_check():
@@ -11,6 +10,6 @@ def credentials_check():
         print("Valid AWS Credentials!") # all print statements related to validation can be commented out once we have proper modules
         return True
     except ClientError as e:
-        logging.error(e)
+        # logging.error(e)
         print("Invalid AWS Credentials!")
         return False
