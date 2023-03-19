@@ -5,13 +5,13 @@ import logging
 
 
 def delete_all_objects_from_s3_folder():
-    """ This method deletes all file objects in a folder from S3 buckets. """
+    """ This method deletes all file in a S3 buckets. """
     s3_client = boto3.client("s3")
     # get the list of buckets
     # bucket_name = "s3bucket4me2test01"
     bucket_names = get_bucketlist()
     if bucket_names != False:
-        print("S3 Buckets : ", bucket_names)
+        print("Available S3 Buckets : ", bucket_names)
     else:
         print("No Buckets found!")
         return False
@@ -20,25 +20,25 @@ def delete_all_objects_from_s3_folder():
         buckets = get_response["Buckets"]
         # print("Before Deleting buckets count : ",len(buckets))        
         if len(buckets) != 0:
-            userinput = str(input(f"Do you want to delete all the {len(buckets)} buckets, Press Y/y to delete : "))
-            if userinput in ['Y','y']:
-                print("\n Deleting all the S3 Buckets ... \n")
+            userinput = str(input(f"Do you want to delete the {len(buckets)} buckets, Enter '1' to delete : "))
+            if userinput == '1':
+                # print("Prechecks Deleting process ... \n")
                 count = len(buckets)
                 while count != 0: # change this to while loop to continue deletion.
                     
                     for bucket_name in bucket_names:
-                        print("Checking if the buckets are empty! \n Checking ...")
+                        print("Checking if the buckets are empty ...")
                         fileObj = s3_client.list_objects_v2(Bucket=bucket_name)
                         fileCount = fileObj['KeyCount']
                         print(f"Found {bucket_name} has this much files : {fileCount}")                    
                         if fileCount == 0:
                             print(f"Deleting {bucket_name} ...")
                             response = s3_client.delete_bucket(Bucket=bucket_name)
-                            print("{} has been deleted successfully !!!".format(bucket_name))
+                            print("S3 bucket {} has been deleted successfully !!!".format(bucket_name))
                             count -= count
                             continue
 
-                        else:
+                        elif userinput == str(input(f"Do you want to delete this {fileCount} file,Enter '1' or anything else to skip : ")):
                             response = s3_client.list_objects_v2(Bucket=bucket_name) 
                             files_in_folder = response["Contents"]
                             files_to_delete = []
@@ -52,6 +52,9 @@ def delete_all_objects_from_s3_folder():
                                 Bucket=bucket_name, Delete={"Objects": files_to_delete}
                             )
                             response_list.append(response)
+                        else:
+                            print("you will not be able to delete the S3 bucket unless its empty!")
+                            continue
                 
                     # print("S3 Buckets left out: ", bucket_names)
                     return True
@@ -62,11 +65,11 @@ def delete_all_objects_from_s3_folder():
         logging.error(e)
         return False
 
-check_delete = delete_all_objects_from_s3_folder()
-if check_delete == True:
-    print("Deletion was successfully completed!")
-else:
-    print("\nNothing Deleted!\n")
+# check_delete = delete_all_objects_from_s3_folder() 
+# if check_delete == True: # Need to move these code to userchoide.py 
+#     print("Deletion was successfully completed!")
+# else:
+#     print("\nNothing Deleted!\n")
 
 # ----- new method - checks if there is any object files before trying to delete the buckets---- 
 # import boto3
