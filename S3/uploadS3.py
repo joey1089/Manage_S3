@@ -17,7 +17,7 @@ def upload2S3(res_s3, buckets_list):
         print("Available buckets : ",fileinbucket)
 
         if file_exists == True:
-            clrscrn()
+            # clrscrn()
             for bucket_name in buckets_list:
                 # print("Current Bucket Name :- ",bucket_name) # only first bucket in the list gets the to upload files
                 # Need to change logic to check the list of buckets then user decided which buckets to upload files.

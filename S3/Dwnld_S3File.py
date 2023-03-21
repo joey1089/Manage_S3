@@ -7,75 +7,35 @@ from pathlib import Path
 
 
 def get_files(s3_client, bucket_list ):
+    '''Download Files from S3 Buckets'''
     # Getting the object:
-    print("Getting S3 object...")
+    # print("Getting S3 object...")
+    # for bucket_name in bucket_list:
+    #     response = s3_client.get_object(Bucket=bucket_name,
+    #                                     Key='encrypt-key')
+    # #s3.download_file('BUCKET_NAME', 'OBJECT_NAME', 'FILE_NAME')
+    # print("Done, response body:")
+    # print(response['Body'].read())
+    
+    # Get the files if found in these buckets        
     for bucket_name in bucket_list:
-        response = s3_client.get_object(Bucket=bucket_name,
-                                        Key='encrypt-key')
-    print("Done, response body:")
-    print(response['Body'].read())
+        # check if file is found in the given bucket
+        file = 'test01.txt' # change this to dynamic file name
+        file_size = key_existing_size__head(s3_client,bucket_name,file)     
+        if file_size != None:
+            try:            
+                s3_client.download_file(bucket_name,file, 'DownloadedTMP.txt')            
+                return True
+            except ClientError as e:
+                logging.error(e)
+                return False
 
-
-
-def get_file_folders(s3_client, bucket_name, prefix=""):
-    file_names = []
-    folders = []
-
-    default_kwargs = {
-        "Bucket": bucket_name,
-        "Prefix": prefix
-    }
-    next_token = ""
-
-    while next_token is not None:
-        updated_kwargs = default_kwargs.copy()
-        if next_token != "":
-            updated_kwargs["ContinuationToken"] = next_token
-
-        response = s3_client.list_objects_v2(**default_kwargs)
-        contents = response.get("Contents")
-
-        for result in contents:
-            key = result.get("Key")
-            if key[-1] == "/":
-                folders.append(key)
-            else:
-                file_names.append(key)
-
-        next_token = response.get("NextContinuationToken")
-
-    return file_names, folders
-
-
-def download_files(s3_client, bucket_name, local_path, file_names, folders):
-
-    local_path = Path(local_path)
-
-    for folder in folders:
-        folder_path = Path.joinpath(local_path, folder)
-        folder_path.mkdir(parents=True, exist_ok=True)
-
-    for file_name in file_names:
-        file_path = Path.joinpath(local_path, file_name)
-        file_path.parent.mkdir(parents=True, exist_ok=True)
-        s3_client.download_file(
-            bucket_name,
-            file_name,
-            str(file_path)
-        )
-
-
-
-# S3_dwnld = boto3.client("s3")
-# bucket_list = get_bucketlist()
-# if bucket_list != False:
-#     file_names, folders = get_file_folders(S3_dwnld, bucket_list)
-#     download_files(
-#         S3_dwnld,
-#         bucket_list,
-#         "/myS3_backup",
-#         file_names,
-#         folders
-#     )
-# else:
-#     print("\nNo Buckets found!\n")
+def key_existing_size__head(client, bucket, key):
+    """return the key's size if it exist, else None"""
+    
+    try:
+        obj = client.head_object(Bucket=bucket, Key=key)
+        return obj['ContentLength']
+    except ClientError as exc:
+        if exc.response['Error']['Code'] != '404':
+            raise
