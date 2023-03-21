@@ -23,7 +23,7 @@ def upload2S3(res_s3, buckets_list):
                 # Need to change logic to check the list of buckets then user decided which buckets to upload files.
                 # Write try catch block to catch if file not found error.
                 # write code to select a bucket that user wants.
-                user_input = str(input(f"Do you want upload file to this {bucket_name}, Enter '1' or anyother key to skip : "))
+                user_input = str(input(f"Do you want to upload file to this {bucket_name} bucket, Enter '1' or anyother key to skip : "))
                 while user_input == '1':
                 # if user_input in ['y','Y']:
                     with open(user_file, 'rb') as data:
