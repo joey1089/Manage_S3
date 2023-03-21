@@ -1,9 +1,9 @@
 from listbuckets import get_bucketlist, clrscrn
 from verify_awscredentials import credentials_check
 from createS3 import create_S3_bucket, get_bucketlist, get_bkt_location
-from deleteS3 import delete_all_objects_from_s3_folder
+from deleteS3 import Delete_All_S3Buckets, delete_all_files_in_bucket
 from uploadS3 import upload2S3
-from Dwnld_S3File import download_files, get_files
+from Dwnld_S3File import get_files
 import time
 import sys
 import pandas as pd
@@ -69,7 +69,7 @@ def user_options():
                 
             print("\n======================== Create your AWS S3 buckets! ================================\n")
             # region_input = None # should trigger default region us-east-1 but its giving errors
-            region_input = str(input("Which region do you like to create the buckets(default 'us-east-1') : ").strip())
+            region_input = str(input("Which region do you like to create the buckets(default 'us-east-1' if nothing is given) : ").strip())
             if len(region_input) == 0:
                 region_input = None #if None then it uses 'us-east-1' by default
             # use the csv file to get the bucket name.
@@ -81,6 +81,7 @@ def user_options():
             created_S3 = create_S3_bucket(S3bucket_list, region_input)
             if created_S3 == True:
                 print("Created S3 buckets : ", get_bucketlist())
+                user_options()
             else:
                 print("Unable to create S3 buckets - check error details!")
                 user_options()
@@ -88,13 +89,14 @@ def user_options():
             print("\nInvalid AWS Access keys!\n")
     elif userchoice == '3':
         # print("\n Deleted S3 Buckets : ")
-        check_delete = delete_all_objects_from_s3_folder() 
-        if check_delete == True: 
-            print("Deletion was successfully completed!")
-            user_options()
-        else:
-            print("\nNothing Deleted!\n")
-            user_options()
+        if get_bucketlist() != False:
+            check_delete = Delete_All_S3Buckets()
+            if check_delete == True: 
+                print("Deletion was successfully completed!")
+                user_options()
+            else:
+                print("\nNothing Deleted!\n")
+                user_options()
     elif userchoice == '4':
         if upload2S3(resource_s3,S3_bucket_list):
             print("\n Uploaded file to S3 Bucket!")
@@ -126,8 +128,13 @@ def user_options():
         exit()
     return exit()
 
-if __name__ == '__main__':   
+
+# if __name__ == '__main__':   
+count = 0
+if count == 0:
+    clrscrn()
     if credentials_check():
+        count += 1
         user_options()
     else:
         print("Invalid AWS Credentials!")
