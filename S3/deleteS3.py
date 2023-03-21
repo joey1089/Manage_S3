@@ -30,7 +30,7 @@ def delete_all_objects_from_s3_folder():
                         print("Checking if the buckets are empty ...")
                         fileObj = s3_client.list_objects_v2(Bucket=bucket_name)
                         fileCount = fileObj['KeyCount']
-                        print(f"Found {bucket_name} has this much files : {fileCount}")                    
+                        print(f"Found {bucket_name} bucket has this much files : {fileCount}")                    
                         if fileCount == 0:
                             print(f"Deleting {bucket_name} ...")
                             response = s3_client.delete_bucket(Bucket=bucket_name)
@@ -52,6 +52,8 @@ def delete_all_objects_from_s3_folder():
                                 Bucket=bucket_name, Delete={"Objects": files_to_delete}
                             )
                             response_list.append(response)
+                            print("\n Deleted files : ", files_to_delete)
+                            delete_all_objects_from_s3_folder()
                         else:
                             print("you will not be able to delete the S3 bucket unless its empty!")
                             continue

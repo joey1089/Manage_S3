@@ -3,7 +3,7 @@ from verify_awscredentials import credentials_check
 from createS3 import create_S3_bucket, get_bucketlist, get_bkt_location
 from deleteS3 import delete_all_objects_from_s3_folder
 from uploadS3 import upload2S3
-from Dwnld_S3File import download_files
+from Dwnld_S3File import download_files, get_files
 import time
 import sys
 import pandas as pd
@@ -27,7 +27,7 @@ def user_options():
     print(select_options)
     userchoice = str(input("\n Enter your choice of operation to perform on S3 Buckets : "))    
     if userchoice == '1':
-        print("\n Checking for S3 buckets in this account ... \n")    
+        print("\n Checking S3 buckets in this account ... \n")    
         time.sleep(2)    
         # # get the list of buckets from S3
         # get_response = resource_s3.list_buckets()
@@ -40,6 +40,7 @@ def user_options():
             anotherchoice = str(input("Do you want to upload a file, Enter '4' or anything else to exit : "))
             if anotherchoice == '4':
                 upload2S3(resource_s3,S3_bucket_list)
+                user_options()
             else:                
                 anotherchoice1 = str(input("Want to continue, Enter '1' or anything else to exit : ")).strip()
                 while anotherchoice1 != '1':                    
@@ -104,10 +105,11 @@ def user_options():
             user_options()
     elif userchoice == '5':
         if get_bucketlist() != False:
-            local_path = str(input("Enter the local path : "))
-            file_names = str(input("Enter the file names : "))
-            folders = str(input("Enter the folder name : "))
-            if download_files(resource_s3,S3_bucket_list, local_path, file_names, folders):
+            # local_path = str(input("Enter the local path : "))
+            # file_names = str(input("Enter the file names : "))
+            # folders = str(input("Enter the folder name : "))
+            # if download_files(resource_s3,S3_bucket_list, local_path, file_names, folders):
+            if get_files(resource_s3,S3_bucket_list):
                 print("\n Downloaded file from S3 Bucket!")
                 user_options()
             else:

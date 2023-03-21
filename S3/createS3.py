@@ -39,8 +39,8 @@ def create_S3_bucket(bucket_list, region=None):
                     # created_bktlist.append[str(bucket_name)] #bucket names are objects so can't subscript - to add them with append(listnames)
                     s3_client.create_bucket(Bucket=bucket_name,)
                                         # CreateBucketConfiguration=location)
-                    [created_bktlist[bucket_name] for bucket_name in range(len(bucket_list)-1)]    
-                    print(created_bktlist)
+                    # [created_bktlist[bucket_name] for bucket_name in range(len(bucket_list)-1)]    
+                    # print(created_bktlist)
                 
             else:
                 s3_client = boto3.client('s3', region_name=region)
@@ -49,8 +49,8 @@ def create_S3_bucket(bucket_list, region=None):
                     s3_client.create_bucket(Bucket=bucket_name,
                                         CreateBucketConfiguration=location)
                     # created_bktlist.append[bucket_name]   
-                    [created_bktlist[bucket_name] for bucket_name in range(len(bucket_list)-1)]             
-                print("Created buckets list : ",bucket_name)
+                #     [created_bktlist[bucket_name] for bucket_name in range(len(bucket_list)-1)]             
+                # print("Created buckets list : ",bucket_name)
     except ClientError as e:
         logging.error(e)
         return False

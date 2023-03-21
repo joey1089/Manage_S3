@@ -6,6 +6,16 @@ from verify_awscredentials import credentials_check
 from pathlib import Path
 
 
+def get_files(s3_client, bucket_list ):
+    # Getting the object:
+    print("Getting S3 object...")
+    for bucket_name in bucket_list:
+        response = s3_client.get_object(Bucket=bucket_name,
+                                        Key='encrypt-key')
+    print("Done, response body:")
+    print(response['Body'].read())
+
+
 
 def get_file_folders(s3_client, bucket_name, prefix=""):
     file_names = []
