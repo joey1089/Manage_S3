@@ -31,13 +31,13 @@ def user_options():
         print("\n Checking S3 buckets in this account ... \n")    
         time.sleep(2)    
         # # get the list of buckets from S3
-        # get_response = resource_s3.list_buckets()
-        # buckets = get_response["Buckets"]      
+        get_response = resource_s3.list_buckets()
+        buckets = get_response["Buckets"]      
 
-        # for bucket in buckets:
-        #     print("S3 bucket name : ",bucket["Name"])
+        for bucket in buckets:
+            print("S3 bucket name : ",bucket["Name"])
         if S3_bucket_list != False:
-            print("List of buckets available now : ",S3_bucket_list) 
+            # print("List of buckets available now : ",S3_bucket_list)
             anotherchoice = str(input("Do you want to upload a file, Enter '4' or anything else to exit : "))
             if anotherchoice == '4':
                 upload2S3(resource_s3,S3_bucket_list)
@@ -82,7 +82,7 @@ def user_options():
             created_S3 = create_S3_bucket(S3bucket_list, region_input)
             if created_S3 == True:
                 print("\nCreated S3 bucket :- ")
-                for bucket in get_bkt_location():
+                for bucket in S3bucket_list:
                     print(f"{bucket}")
                 user_options()
             else:
@@ -95,19 +95,23 @@ def user_options():
         print("\n======================== Delete your AWS S3 buckets! ================================\n")
         if get_bucketlist() != False:
             check_delete = Delete_All_S3Buckets()
-            if check_delete == True: 
+            if check_delete != False: 
                 print("Deletion was successfully completed!")
                 user_options()
             else:
                 print("\nNothing Deleted!\n")
                 user_options()
+        else:
+            print("No Buckets Found!")
+            user_options()           
+            
     elif userchoice == '4':
         print("\n==================== Upload your file to a AWS S3 buckets! ===============================\n")
         if upload2S3(resource_s3,S3_bucket_list):
-            print("\n Uploaded file to S3 Bucket!")
+            print("\n Uploaded file to S3 Bucket! \n")
             user_options()
         else:
-            print("\n Upload Incomplete! \nProceed to main menu ... ") 
+            print("\n Upload Incomplete! \nProceeding to main menu ... ") 
             time.sleep(2)     
             user_options()
     elif userchoice == '5':

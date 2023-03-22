@@ -58,6 +58,9 @@ coverage.xml
 # Temporary folders used to download files
 /tmp/*
 DownloadedTMP.*
+# Download files
+downloaded_*.*
+test**.*
 
 # Django stuff:
 *.log

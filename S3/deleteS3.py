@@ -50,7 +50,7 @@ def Delete_All_S3Buckets():
         buckets = get_response["Buckets"]
         # print("Before Deleting buckets count : ",len(buckets))        
         if len(buckets) != 0:
-            userinput = str(input(f"Do you want to delete the {len(buckets)} buckets, Enter '1' to delete : "))
+            userinput = str(input(f"Do you want to delete the {len(buckets)} buckets, Enter '1' to delete, anyother key to skip : "))
             if userinput == '1':
                 # print("Prechecks Deleting process ... \n")
                 count = len(buckets)
