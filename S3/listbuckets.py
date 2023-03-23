@@ -6,6 +6,7 @@ import os
 import logging
 
 def clrscrn():
+    '''This method clears the screen!'''
     if os.name == 'posix':
         os.system('clear')
     else:

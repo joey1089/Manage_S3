@@ -7,22 +7,26 @@ import os.path
 def upload2S3(res_s3, buckets_list):
     ''' Uploads given file to s3 buckets in the list. '''
     # print(s3)
-    fileinbucket = []
-    user_file = str(input("\nGive full path details for the file you want to upload : "))
+    available_bucket = []
+    user_file = str(input("\nGive full path details or just name if local for the file you want to upload : "))
     # file2upload = user_file #should be same as the data   
     file_exists = os.path.exists(user_file) # check if files exist or not      
-    if get_bucketlist(): # Redundant check need to change the logic to fit all options
-        for bucket_name in buckets_list:
-            fileinbucket.append(bucket_name)
-        print("Available buckets : ",fileinbucket)
+    if get_bucketlist(): # Redundant check need to change the logic to better efficient way.
+        # for loop doesn't show the files in bucket, its getting the bucket name.
+       
 
         if file_exists == True:
             # clrscrn()
+            for bucket_name in buckets_list:
+                available_bucket.append(bucket_name)
+            print("Available buckets : ",available_bucket)
+
             for bucket_name in buckets_list:
                 # print("Current Bucket Name :- ",bucket_name) # only first bucket in the list gets the to upload files
                 # Need to change logic to check the list of buckets then user decided which buckets to upload files.
                 # Write try catch block to catch if file not found error.
                 # write code to select a bucket that user wants.
+
                 user_input = str(input(f"Do you want to upload file to this {bucket_name} bucket, Enter '1' or anyother key to skip : "))
                 while user_input == '1':
                 # if user_input in ['y','Y']:
