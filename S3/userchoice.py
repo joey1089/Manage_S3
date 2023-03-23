@@ -16,13 +16,14 @@ def user_options():
     S3_bucket_list = get_bucketlist()
     # clrscrn()
     select_options = '''
-    =============================== Manage S3 Bucket ===============================
-    List the S3 Buckets, Enter '1' 
-    Create a S3 Bucket, Enter '2' 
-    Delete a S3 Bucket, Enter '3'
-    Upload file to a S3 Bucket, Enter '4'
-    Download file from a S3 Bucket, Enter '5'
-    Enter anything else to exit!    
+    ================================== Manage S3 Buckets ====================================
+    ==> List the S3 Buckets, Enter ----------: '1' 
+    ==> Create a S3 Bucket, Enter -----------: '2' 
+    ==> Delete a S3 Bucket, Enter -----------: '3'
+    ==> Upload file to a S3 Bucket, Enter ---: '4'
+    ==> Download file from a S3 Bucket, Enter  '5'
+    ==> Enter key or anything else to <<* EXIT *>>  
+    ========================================================================================  
     '''
     print(select_options)
     userchoice = str(input("\n Enter your choice of operation to perform on S3 Buckets : "))    
@@ -80,7 +81,9 @@ def user_options():
             # print(data.loc[0:2]) # get the 3 rows from the start
             created_S3 = create_S3_bucket(S3bucket_list, region_input)
             if created_S3 == True:
-                print("Created S3 buckets : ", get_bucketlist())
+                print("\nCreated S3 bucket :- ")
+                for bucket in get_bkt_location():
+                    print(f"{bucket}")
                 user_options()
             else:
                 print("Unable to create S3 buckets - check error details!")
@@ -89,6 +92,7 @@ def user_options():
             print("\nInvalid AWS Access keys!\n")
     elif userchoice == '3':
         # print("\n Deleted S3 Buckets : ")
+        print("\n======================== Delete your AWS S3 buckets! ================================\n")
         if get_bucketlist() != False:
             check_delete = Delete_All_S3Buckets()
             if check_delete == True: 
@@ -98,6 +102,7 @@ def user_options():
                 print("\nNothing Deleted!\n")
                 user_options()
     elif userchoice == '4':
+        print("\n==================== Upload your file to a AWS S3 buckets! ===============================\n")
         if upload2S3(resource_s3,S3_bucket_list):
             print("\n Uploaded file to S3 Bucket!")
             user_options()
@@ -106,6 +111,7 @@ def user_options():
             time.sleep(2)     
             user_options()
     elif userchoice == '5':
+        print("\n================== Download your file from a AWS S3 buckets! ========================\n")
         if get_bucketlist() != False:
             # local_path = str(input("Enter the local path : "))
             # file_names = str(input("Enter the file names : "))
