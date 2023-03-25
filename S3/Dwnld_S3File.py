@@ -46,8 +46,8 @@ def get_files(s3_client, bucket_list ):
     # Get the files if found in these buckets        
     for bucket_name in bucket_list:
         # go through the list of files in the bucket.
-        for file in files:  
-            count = 0
+        count = 0
+        for file in files:             
             while len(files) != 0:
             # check if file is exists in this given bucket!                
                 file_size = key_existing_size__head(s3_client,bucket_name,file)  

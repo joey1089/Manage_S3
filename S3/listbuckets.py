@@ -14,7 +14,7 @@ def clrscrn():
 
 
 def get_bucketlist():
-    ''' This method returns list of buckets names if found.'''
+    ''' This method returns list of bucket names if found.'''
     
     resource_s3 = boto3.client("s3")
     try:
