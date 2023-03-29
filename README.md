@@ -23,6 +23,10 @@ Building a CLI interface for the user to manage the S3 bucket operations. This m
 3. Delete a S3 bucket,
 4. Upload file to a S3 bucket,
 5. Download file from a S3 bucket.
+
+As you can see, the user is given a choice of operation to perform on the S3 bucket. Let's use the code to see how this is done through the code. Once the credientials_check() returns true we proceed to show the list of operations in the CLI. To simplify user input, I used numbers rather than letters or words.
+
+
 Task:3 — List out the S3 buckets in the account
 Its better to verify if we have buckets in the account before proceeding to create a bucket. So wrote a method to get the list of bucket names using the method get_bucketlist(). Here we make use of boto3 client object to get the list of buckets with help of the list_buckets() method.
 Task:4— Create five S3 buckets from a .csv file.
