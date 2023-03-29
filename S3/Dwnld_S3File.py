@@ -7,11 +7,10 @@ from pathlib import Path
 import uuid
 
 
-def gen_filename():
-    '''Generate file name for the file download'''
-    d_filename = "downloaded_"
+def gen_filename(file_name):
+    '''Generate file name for the file download'''    
     gen_uuid = str(uuid.uuid4()) # random uuid generated 
-    d_filename = d_filename + gen_uuid[0:5] + '.txt'
+    d_filename = 'DLfile_'+ gen_uuid[0:5] + '_' + file_name
     print(d_filename)
     return d_filename
 
@@ -47,14 +46,12 @@ def get_files(s3_client, bucket_list ):
     for bucket_name in bucket_list:
         # go through the list of files in the bucket.
         count = 0
-        for file in files:             
-            while len(files) != 0:
-            # check if file is exists in this given bucket!                
+        for file in files:                                  
                 file_size = key_existing_size__head(s3_client,bucket_name,file)  
                 count += 1     
                 if file_size != None:
                     try:            
-                        s3_client.download_file(bucket_name,file, gen_filename())  # gen_filename() - downloaded file name
+                        s3_client.download_file(bucket_name,file, gen_filename(file))  # gen_filename() - downloaded file name
                         if count == len(files):
                             return True
                         continue

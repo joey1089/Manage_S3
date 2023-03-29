@@ -60,6 +60,7 @@ coverage.xml
 DownloadedTMP.*
 # Download files
 downloaded_*.*
+DLfile_*_*.*
 test**.*
 
 # Django stuff:
