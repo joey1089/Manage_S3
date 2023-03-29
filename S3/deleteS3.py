@@ -68,10 +68,11 @@ def Delete_All_S3Buckets():
                             continue
                         else:
                             if (delete_all_files_in_bucket(s3_client,bucket_name,buckets)) != False:
-                                return True                          
-                
-                   
+                                return True                      
+                                
                     return True
+            else:
+                return False
         else:
             print("No Buckets found!")
             return False
