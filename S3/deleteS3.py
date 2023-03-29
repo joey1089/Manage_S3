@@ -34,7 +34,7 @@ def delete_all_files_in_bucket(s3_client,bucket_name,buckets):
 
 
 def Delete_All_S3Buckets():
-    """ This method delete all S3 buckets if no files found else it call on delete_all_files_in_bucket(). """
+    """ This method delete all S3 buckets if no files found else it call on delete_all_files_in_bucket() to delete files. """
     s3_client = boto3.client("s3")
     # get the list of buckets
     # bucket_name = "s3bucket4me2test01"
@@ -54,8 +54,7 @@ def Delete_All_S3Buckets():
             if userinput == '1':
                 # print("Prechecks Deleting process ... \n")
                 count = len(buckets)
-                while count != 0: # change this to while loop to continue deletion.
-                    
+                while count != 0: # change this to while loop to continue deletion.                    
                     for bucket_name in bucket_names:
                         print("Checking if the buckets are empty ...")
                         fileObj = s3_client.list_objects_v2(Bucket=bucket_name)
@@ -67,13 +66,13 @@ def Delete_All_S3Buckets():
                             print("S3 bucket {} has been deleted successfully !!!".format(bucket_name))
                             count -= count
                             continue
-
                         else:
                             if (delete_all_files_in_bucket(s3_client,bucket_name,buckets)) != False:
-                                return True                           
-                
-                    # print("S3 Buckets left out: ", bucket_names)
+                                return True                      
+                                
                     return True
+            else:
+                return False
         else:
             print("No Buckets found!")
             return False

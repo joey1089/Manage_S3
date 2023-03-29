@@ -1,6 +1,6 @@
 import boto3
 from botocore.exceptions import ClientError
-from listbuckets import get_bucketlist, clrscrn
+from listbuckets import get_bucketlist
 import os.path
 
 
@@ -47,18 +47,6 @@ def upload2S3(res_s3, buckets_list):
             return False
     else:
         print("\n No Buckets are found in this account!")
-        
+      
 
 
-# resource_s3 = boto3.client("s3")
-# # # get the list of buckets from S3
-# # get_response = resource_s3.list_buckets()
-# # buckets = get_response["Buckets"]
-# S3_bucket_list = get_bucketlist()
-
-# # for bucket in buckets:
-# #     print("S3 bucket name : ",bucket["Name"])
-# if S3_bucket_list != False:
-#     print(upload2S3(resource_s3,S3_bucket_list))
-# else:
-#     print("\n No S3 Buckets exist in the account! \n")
