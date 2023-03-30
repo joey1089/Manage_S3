@@ -111,19 +111,19 @@ def user_options():
         print("\n================== Download your file from a AWS S3 buckets! ========================\n")
         if get_bucketlist() != False:          
             if get_files(resource_s3,S3_bucket_list):
-                print("\n Downloaded file from S3 Bucket!")
+                print("\n Download Completed Successfully!")
                 user_options()
             else:
                 print("\n Download Incomplete! \nProceed to main menu ... ") 
-                time.sleep(2)     
+                # time.sleep(2)     
                 user_options()
         else:
             print("\n No buckets found!")
-            time.sleep(2)
+            # time.sleep(2)
             user_options()
     else:
-        print("Exiting ...")
-        time.sleep(2)
+        print("\n Exiting ...")
+        # time.sleep(2)
         exit()
     return exit()
 
@@ -137,6 +137,8 @@ if count == 0:
         user_options()
     else:
         print("Invalid AWS Credentials!")
+        print("\n Terminating ...")
+        time.sleep(2)
         sys.exit()  
 
 

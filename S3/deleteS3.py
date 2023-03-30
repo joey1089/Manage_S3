@@ -15,12 +15,13 @@ def delete_all_files_in_bucket(s3_client,bucket_name,buckets):
 
     # This will delete all files in a folder    
     # for f in len(files_to_delete):
-    userinput = str(input(f"Proceed deleting this {files_to_delete[0]['Key']} file found in {bucket_name},Enter '1' or anything else to skip : ")).strip()
+    userinput = str(input(f"Want to delete all the files found in {bucket_name},Enter '1' or anything else to skip : ")).strip()
     if userinput == '1':
         response = s3_client.delete_objects(
             Bucket=bucket_name, Delete={"Objects": files_to_delete}
         )
-        print(f"\n Deleted file {files_to_delete[0]['Key']} from {bucket_name} bucket!")
+        print(f"\n Deleted the files found in {bucket_name}")
+        # print(f"\n Deleted file {files_to_delete[0]['Key']} from {bucket_name} bucket!") # for deleting the first file
        
         if len(buckets) != 0:                
             Delete_All_S3Buckets()                
@@ -59,7 +60,7 @@ def Delete_All_S3Buckets():
                         print("Checking if the buckets are empty ...")
                         fileObj = s3_client.list_objects_v2(Bucket=bucket_name)
                         fileCount = fileObj['KeyCount']
-                        print(f"Found {bucket_name} bucket has this much files : {fileCount}")                    
+                        print(f"{fileCount} files/folders found in this {bucket_name}")                    
                         if fileCount == 0:
                             print(f"Deleting {bucket_name} ...")
                             response = s3_client.delete_bucket(Bucket=bucket_name)
