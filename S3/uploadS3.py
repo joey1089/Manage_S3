@@ -8,7 +8,7 @@ def upload2S3(res_s3, buckets_list):
     ''' Uploads given file to s3 buckets in the list. '''
     # print(s3)
     available_bucket = []
-    user_file = str(input("\nGive full path details or just name if local for the file you want to upload : "))
+    user_file = str(input("\nGive full path details or just name if file is in current dir- : "))
     # file2upload = user_file #should be same as the data   
     file_exists = os.path.exists(user_file) # check if files exist or not      
     if get_bucketlist(): # Redundant check need to change the logic to better efficient way.
@@ -19,7 +19,7 @@ def upload2S3(res_s3, buckets_list):
             # clrscrn()
             for bucket_name in buckets_list:
                 available_bucket.append(bucket_name)
-            print("Available buckets : ",available_bucket)
+            # print("Available buckets : ",available_bucket)
 
             for bucket_name in buckets_list:
                 # print("Current Bucket Name :- ",bucket_name) # only first bucket in the list gets the to upload files
@@ -43,7 +43,8 @@ def upload2S3(res_s3, buckets_list):
                 # else:
                 #     return f"No files uploaded for {bucket_name}!"
         else:
-            print(f'The given file {user_file} or S3 bucket does not exist!')  
+            if len(user_file) == 0:
+                print(f'The given file {user_file} does not exist!')  
             return False
     else:
         print("\n No Buckets are found in this account!")

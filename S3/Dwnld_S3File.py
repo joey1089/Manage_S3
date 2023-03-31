@@ -11,7 +11,7 @@ def gen_filename(file_name):
     '''Generate file name for the file download'''    
     gen_uuid = str(uuid.uuid4()) # random uuid generated 
     d_filename = 'DLfile_'+ gen_uuid[0:5] + '_' + file_name
-    print(d_filename)
+    # print(d_filename)
     return d_filename
 
 
@@ -50,7 +50,8 @@ def get_files(s3_client, bucket_list ):
                 file_size = key_existing_size__head(s3_client,bucket_name,file)  
                 count += 1     
                 if file_size != None:
-                    try:            
+                    try:      
+                        print(f"\n Downloading all the {gen_filename(file)} from the bucket {bucket_name}!")      
                         s3_client.download_file(bucket_name,file, gen_filename(file))  # gen_filename() - downloaded file name
                         if count == len(files):
                             return True
