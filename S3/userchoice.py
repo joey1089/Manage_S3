@@ -110,7 +110,7 @@ def user_options():
     elif userchoice == '5':
         print("\n================== Download your file from a AWS S3 buckets! ========================\n")
         if get_bucketlist() != False:          
-            if get_files(resource_s3,S3_bucket_list):
+            if get_files(S3_bucket_list):
                 print("\n Download Completed Successfully!")
                 user_options()
             else:
@@ -133,7 +133,7 @@ count = 0
 if count == 0:
     clrscrn()
     if credentials_check():
-        count += 1
+        count += 1      
         user_options()
     else:
         print("Invalid AWS Credentials!")
