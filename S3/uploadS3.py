@@ -10,22 +10,15 @@ def upload2S3(res_s3, buckets_list):
     available_bucket = []
     user_file = str(input("\nGive full path details or just name if file is in current dir- : "))
     # file2upload = user_file #should be same as the data   
-    file_exists = os.path.exists(user_file) # check if files exist or not      
+    
+    file_exists = os.path.exists(user_file) # check if files exist or not   
+    # get_filename = os.path.basename(user_file) # to get the filename without the path
     if get_bucketlist(): # Redundant check need to change the logic to better efficient way.
-        # for loop doesn't show the files in bucket, its getting the bucket name.
-       
+        # for loop doesn't show the files in bucket, its getting the bucket name.      
 
-        if file_exists == True:
-            # clrscrn()
-            for bucket_name in buckets_list:
-                available_bucket.append(bucket_name)
-            # print("Available buckets : ",available_bucket)
+        if file_exists == True:     
 
-            for bucket_name in buckets_list:
-                # print("Current Bucket Name :- ",bucket_name) # only first bucket in the list gets the to upload files
-                # Need to change logic to check the list of buckets then user decided which buckets to upload files.
-                # Write try catch block to catch if file not found error.
-                # write code to select a bucket that user wants.
+            for bucket_name in buckets_list:     
 
                 user_input = str(input(f"Do you want to upload file to this {bucket_name} bucket, Enter '1' or anyother key to skip : "))
                 while user_input == '1':
@@ -35,7 +28,8 @@ def upload2S3(res_s3, buckets_list):
                         res_s3.upload_fileobj(
                             Fileobj=data, 
                             Bucket=bucket_name, 
-                            Key=user_file
+                            # Key=user_file
+                            Key=os.path.basename(user_file) # this will upload only the file not with the path
                         )
                     print(f"This Bucket {bucket_name} got uploaded with file {data.name}")
                     return True
@@ -44,7 +38,8 @@ def upload2S3(res_s3, buckets_list):
                 #     return f"No files uploaded for {bucket_name}!"
         else:
             if len(user_file) == 0:
-                print(f'The given file {user_file} does not exist!')  
+                print(f'No file {user_file} !')  
+            print(f"The given file {user_file} is not found!")
             return False
     else:
         print("\n No Buckets are found in this account!")
