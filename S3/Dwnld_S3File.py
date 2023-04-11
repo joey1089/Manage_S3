@@ -19,7 +19,7 @@ def gen_filename(file_name):
 
 
 def get_files(bucket_list):
-    '''gets all the files from all the buckets!'''
+    '''Downloads all the files from all the buckets!'''
     s3_resource = boto3.resource('s3') # using boto3 resources instead of client
 
     files = []

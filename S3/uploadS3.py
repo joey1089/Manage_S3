@@ -7,8 +7,8 @@ import os.path
 def upload2S3(res_s3, buckets_list):
     ''' Uploads given file to s3 buckets in the list. '''
     # print(s3)
-    available_bucket = []
-    user_file = str(input("\nGive full path details or just name if file is in current dir- : "))
+    # available_bucket = []
+    user_file = str(input("\n Give full path details or just name if file is in current dir- : "))
     # file2upload = user_file #should be same as the data   
     
     file_exists = os.path.exists(user_file) # check if files exist or not   
@@ -38,7 +38,7 @@ def upload2S3(res_s3, buckets_list):
                 #     return f"No files uploaded for {bucket_name}!"
         else:
             if len(user_file) == 0:
-                print(f'No file {user_file} !')  
+                print(f'No file is given {user_file} !')  
             print(f"The given file {user_file} is not found!")
             return False
     else:
