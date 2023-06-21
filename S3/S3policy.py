@@ -1,3 +1,4 @@
+# By default AWS has made the S3 bucket as private!
 import boto3
 from botocore.exceptions import ClientError
 from listbuckets import get_bucketlist
