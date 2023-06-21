@@ -1,10 +1,12 @@
-# Manage_S3
-AWS S3 bucket Management - Creation, deletion of buckets and its object, uploading objects to S3 and downloading them on demand.
+# AWS S3 bucket Management
+Do Creation, deletion of buckets and its object, uploading objects to S3 and downloading them on demand.
+
+![Manage S3 - 800x350px (3)](https://github.com/joey1089/Manage_S3/assets/90427049/47aa75c2-db25-46e4-b1bf-3466e26ae8b7)
+
 
 Check out the youtube demo -> https://youtu.be/1076mS2xkdU
 
-
-Tasks to do:
+#Tasks to do:
 AWS user credentials verification.
 Built a user interface in CLI, so user can choose what actions they can perform on S3 buckets.
 List out the S3 buckets in the account.
