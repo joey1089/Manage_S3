@@ -3,7 +3,7 @@ Do Creation, deletion of buckets and its object, uploading objects to S3 and dow
 
 ![Manage S3 - 800x350px (3)](https://github.com/joey1089/Manage_S3/assets/90427049/47aa75c2-db25-46e4-b1bf-3466e26ae8b7)
 
-
+To read full article -> https://medium.com/devops-dudes/managing-amazon-s3-buckets-made-easy-with-python-and-aws-boto3-4d05c9ee06ee
 Check out the youtube demo -> https://youtu.be/1076mS2xkdU
 
 #Tasks to do:
@@ -48,5 +48,5 @@ Task:7-Download file objects from S3 Buckets
 I made use of AWS boto3 documentation extensively for this purpose. Here I used the boto3.client to download the files from a S3 Bucket. If you want, you can also use boto3.resource to do the downloads.The download_file method accepts the names of the bucket and object to download and the filename to save the file to.
 
 
-for full article -> https://medium.com/devops-dudes/managing-amazon-s3-buckets-made-easy-with-python-and-aws-boto3-4d05c9ee06ee
+
 
