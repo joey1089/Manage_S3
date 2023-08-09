@@ -127,19 +127,23 @@ def user_options():
         exit()
     return exit()
 
+def main():
+    ''' best practice followed to place main() as enter point!'''
+    count = 0
+    if count == 0:
+        clrscrn()
+        if credentials_check():
+            count += 1      
+            user_options()
+        else:
+            print("Invalid AWS Credentials!")
+            print("\n Terminating ...")
+            time.sleep(2)
+            sys.exit()  
 
-# if __name__ == '__main__':   
-count = 0
-if count == 0:
-    clrscrn()
-    if credentials_check():
-        count += 1      
-        user_options()
-    else:
-        print("Invalid AWS Credentials!")
-        print("\n Terminating ...")
-        time.sleep(2)
-        sys.exit()  
+
+if __name__ == '__main__':   
+   main()
 
 
 
