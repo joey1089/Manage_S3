@@ -1,4 +1,4 @@
-# This code returns the list of buckets if it exist in the account
+# This code returns the list of buckets if it exists in the account
 # Use aws configure in awscli to pass the access key
 import boto3
 from botocore.exceptions import ClientError

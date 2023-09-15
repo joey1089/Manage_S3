@@ -1,3 +1,4 @@
+# This is the main file that starts execution
 from listbuckets import get_bucketlist, clrscrn
 from verify_awscredentials import credentials_check
 from createS3 import create_S3_bucket, get_bucketlist, get_bkt_location
@@ -104,7 +105,7 @@ def user_options():
             print("\n Uploaded file to S3 Bucket! \n")
             user_options()
         else:
-            print("\n Upload Incomplete! \nProceeding to main menu ... ") 
+            print("\n Upload Incomplete! \n Proceeding to main menu ... ") 
             time.sleep(2)     
             user_options()
     elif userchoice == '5':
