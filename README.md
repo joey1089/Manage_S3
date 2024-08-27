@@ -1,5 +1,5 @@
 # AWS S3 bucket Management
-Do Creation, deletion of buckets and its object, uploading objects to S3 and downloading them on demand.
+You can do Creation, deletion of buckets and its object, uploading objects to S3 and downloading them on demand.
 
 ![Manage S3 - 800x350px (3)](https://github.com/joey1089/Manage_S3/assets/90427049/47aa75c2-db25-46e4-b1bf-3466e26ae8b7)
 
